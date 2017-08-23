@@ -58,36 +58,9 @@ namespace DynamicSite.Controllers
 
         public IActionResult References()
         {
-            var commentList = new List<ReferenceModel>();
-            var firstComment = new ReferenceModel
-            {
-                Message = "hi there",
-                Name = "tom",
-                Email = "tom@tomtom.com",
-                Website = "tom.com"
-            };
-            commentList.Add(firstComment);
+            var bob = new ReferenceModel();
+            var commentList = bob.Builder();
 
-            using (var reader = new StreamReader(System.IO.File.Open("comments.csv", FileMode.Open)))
-                while (reader.Peek() >= 0)
-                {
-                    var objMessage = string.Empty;
-                    var objName = string.Empty;
-                    var objEmail = string.Empty;
-                    var objWebsite = string.Empty;
-
-                    var user = reader.ReadLine();
-                    var data = user.Split(',');
-                    for (int i = 0; i < data.Length; i+=4)
-                    {
-                        objMessage = data[i];
-                        objName = data[i+1];
-                        objEmail = data[i+2];
-                        objWebsite = data[i+3];
-                    
-                        
-                    }
-                }
             return View(commentList);
         }
 
@@ -105,15 +78,13 @@ namespace DynamicSite.Controllers
         [HttpPost]
         public IActionResult References(string message, string name, string email, string website)
         {
-            ViewData["message"] = message;
-            ViewData["name"] = name;
-            ViewData["email"] = email;
-            ViewData["website"] = website;
-            using ( var writer = new StreamWriter(System.IO.File.Open($"comments.csv",FileMode.Append)))
+            using (var writer = new StreamWriter(System.IO.File.Open($"comments.csv", FileMode.Append)))
             {
-                writer.WriteLine($"{name},{email}");
+                writer.WriteLine($"'{message}',{name},{email},{website},{DateTime.Now},");
             }
-            return View();
+            var bob = new ReferenceModel();
+            var commentList = bob.Builder();
+            return View(commentList);
         }
     }
 }
