@@ -1,0 +1,20 @@
+@{
+    ViewData["Title"] = "References";
+}
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+<form asp-controller="Home" asp-action="References" method="post">
+    <input type="text" name = "message" placeholder="Message" /><br />
+    <input type="text" name = "name" placeholder="Name" /><br />
+    <input type="email" name = "email" placeholder="Email"/> <br />
+    <input type="text" name = "website" placeholder="Website Link URL"/> <br />
+    <button type="submit">Add Message</button>
+</form>
+<div>
+    @model List<ReferenceModel>
+        @foreach(var item in Model)
+        {
+            <p>@item.Message - @item.Name</p>
+            <p>Email - @item.Email Website - @item.Website</p>
+        }
+</div>

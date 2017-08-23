@@ -1,0 +1,20 @@
+@{
+    ViewData["Title"] = "Price List";
+}
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+<table>
+    <tr>
+        <td>Service</td>
+        <td>Info</td>
+        <td>Price</td>
+@model List<PriceModel>
+    @foreach(var item in Model)
+    {
+        <tr>
+            <td>@item.Service </td>
+            <td>@item.Info </td>
+            <td>@item.Price </td>
+        </tr>
+    }
+</table>
